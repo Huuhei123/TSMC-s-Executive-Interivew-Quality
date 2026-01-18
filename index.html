@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why TSMC's CFO Failed Taiwan</title>
+    <meta property="og:title" content="Why TSMC's CFO Failed Taiwan">
+    <meta property="og:description" content="Side-by-side analysis of missed opportunities in a $500B high-stakes interview">
+    <meta property="og:type" content="article">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4d8f;
+            --primary-dark: #0d2847;
+            --accent: #c8102e;
+            --bg-main: #fafbfc;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a5568;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 700px;
+        }
+
+        .context-banner {
+            background: var(--accent);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .intro-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--primary);
+        }
+
+        .intro-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .intro-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .question-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .question-btn {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 77, 143, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .question-btn:hover::before {
+            left: 100%;
+        }
+
+        .question-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-num {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-btn.active .question-num {
+            background: white;
+            color: var(--primary);
+        }
+
+        .comparison-section {
+            display: none;
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .comparison-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border);
+        }
+
+        .question-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 968px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .answer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            border: 2px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .answer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .answer-card.original {
+            border-top: 4px solid #9ca3af;
+        }
+
+        .answer-card.improved {
+            border-top: 4px solid #10b981;
+        }
+
+        .card-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .original .card-label {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .improved .card-label {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .answer-text {
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .insights-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .insights-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #92400e;
+        }
+
+        .insight-tag {
+            display: inline-block;
+            background: white;
+            color: #92400e;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .key-improvements {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .key-improvements h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .improvement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .improvement-item {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid var(--primary);
+        }
+
+        .improvement-item strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-btn.linkedin {
+            background: #0077b5;
+            color: white;
+        }
+
+        .share-btn.linkedin:hover {
+            background: #006399;
+            transform: translateY(-2px);
+        }
+
+        .share-btn.download {
+            background: var(--primary);
+            color: white;
+        }
+
+        .share-btn.download:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Why TSMC's CFO Failed Taiwan</h1>
+            <p class="subtitle">A side-by-side analysis of what should have been said in this $500B high-stakes interview</p>
+        </div>
+    </div>
+
+    <div class="context-banner">
+        CONTEXT: TSMC navigates US-Taiwan tech transfer amid $500B commitment pressure & domestic "hollowing out" criticism
+    </div>
+
+    <div class="container">
+        <div class="intro-section">
+            <h2>Why This Matters</h2>
+            <p>
+                This analysis examines how TSMC's CFO Wendell Huang responded to questions about technology transfer timelines 
+                during a critical moment when Taiwan faces pressure over semiconductor ecosystem localization. We compare the 
+                actual responses with strategically optimized alternatives that shift from defensive posturing to expert authority, 
+                redirect pressure onto U.S. infrastructure readiness, and protect Taiwan's strategic advantage while maintaining 
+                diplomatic relationships.
+            </p>
+        </div>
+
+        <div class="question-nav" id="questionNav">
+            <!-- Questions will be populated by JavaScript -->
+        </div>
+
+        <div id="comparisons">
+            <!-- Comparisons will be populated by JavaScript -->
+        </div>
+
+        <div class="key-improvements">
+            <h3>8 Key Strategic Improvements</h3>
+            <div class="improvement-grid">
+                <div class="improvement-item">
+                    <strong>1. Expert Authority</strong>
+                    Shifted from defensive to confident positioning: "We're the experts," "We've built hundreds of fabs"
+                </div>
+                <div class="improvement-item">
+                    <strong>2. Reversed Pressure</strong>
+                    Changed narrative from defending TSMC's timeline to questioning U.S. ecosystem readiness
+                </div>
+                <div class="improvement-item">
+                    <strong>3. Specific Evidence</strong>
+                    1,000+ Taiwanese engineers, CEO educating state officials, supplier localization challenges
+                </div>
+                <div class="improvement-item">
+                    <strong>4. U.S. Infrastructure Gaps</strong>
+                    Listed talent shortage, regulatory deficiencies, permitting delays, supplier ecosystem immaturity
+                </div>
+                <div class="improvement-item">
+                    <strong>5. Ecosystem Narrative</strong>
+                    Shifted from "tech transfer timeline" to comprehensive "ecosystem readiness"
+                </div>
+                <div class="improvement-item">
+                    <strong>6. Diplomatic Partnership</strong>
+                    Framed as collaboration while identifying bottlenecks outside TSMC's control
+                </div>
+                <div class="improvement-item">
+                    <strong>7. Projected Confidence</strong>
+                    Changed from "difficult, challenging" to "We're ready when you are"
+                </div>
+                <div class="improvement-item">
+                    <strong>8. Strategic Deflection</strong>
+                    Kicked responsibility to U.S. government for talent, regulatory frameworks, infrastructure
+                </div>
+            </div>
+        </div>
+
+        <div class="share-buttons">
+            <button class="share-btn linkedin" onclick="shareLinkedIn()">
+                📱 Share on LinkedIn
+            </button>
+            <button class="share-btn download" onclick="downloadPDF()">
+                📄 Download PDF Version
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Analysis focuses on strategic communication in high-stakes geopolitical contexts</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">Created January 2026</p>
+    </div>
+
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        ↑
+    </div>
+
+    <script>
+        const questions = [
+            {
+                num: 1,
+                question: "About expansion plans and why leading-edge technology stays in Taiwan",
+                original: "It really depends on customer demand. In the US, a lot of customers want to go there, so we will expand over there. But for the leading-edge technologies, it will be in Taiwan, because it's a heavy cooperation between the R&D people and operation people for practical reasons.",
+                improved: "It really depends on customer demand. In the US, a lot of customers want to go there, so we will expand over there. But for the leading-edge technologies, it will be in Taiwan, because it requires deep integration between R&D and operations, and frankly, the complete ecosystem that Taiwan has built over 35 years.",
+                insights: ["Ecosystem Framing", "Strategic Positioning"]
+            },
+            {
+                num: 2,
+                question: "Will leading-edge continue to be led by Taiwan even with US expansion?",
+                original: "Yeah, that's for practical reasons.",
+                improved: "Yes, and let me be clear why. Leading-edge manufacturing requires more than just TSMC facilities - it requires a complete semiconductor ecosystem: qualified talent at every level, suppliers who understand our processes, and regulatory frameworks designed for advanced chip manufacturing. Taiwan has this. The U.S. is building it, with our help.",
+                insights: ["Expert Authority", "Ecosystem Complexity", "Partnership Framing"]
+            },
+            {
+                num: 3,
+                question: "Is it possible to speed up advanced tech transfer from Taiwan to the States?",
+                original: "Yeah, we can try to do that, to shorten the gap.",
+                improved: "We're ready to accelerate whenever the ecosystem is ready to receive it. Right now, we have over 1,000 Taiwanese engineers in Arizona because the U.S. doesn't produce enough qualified semiconductor talent. We're working with our supplier network to localize around Arizona - that's a multi-year process. Our CEO has attended state government meetings to educate officials on environmental regulations specific to semiconductor manufacturing. These aren't TSMC bottlenecks - these are ecosystem readiness issues. Before we discuss timeline commitments, we should discuss whether the U.S. infrastructure - talent pipeline, regulatory frameworks, supplier networks - is ready.",
+                insights: ["Reversed Pressure", "Concrete Evidence", "U.S. Accountability"]
+            },
+            {
+                num: 4,
+                question: "What does the transfer gap look like in the future?",
+                original: "We don't have a specific timeline now, but we can try to accelerate that. We think we can try to accelerate that.",
+                improved: "It depends less on TSMC's capabilities and more on how quickly the U.S. can build its semiconductor ecosystem. We're actively helping - training programs, supplier partnerships, working with regulators. But you can't compress decades of ecosystem development into months. The real question is: how fast can the U.S. develop the talent pool, streamline permitting processes, and establish a local supply chain? Those timelines will determine technology transfer timelines, not TSMC's willingness.",
+                insights: ["Shift Responsibility", "Long-term Perspective", "Partnership Position"]
+            },
+            {
+                num: 5,
+                question: "Could the gap be shortened to months?",
+                original: "It will be difficult, challenging. Okay, so it stays at least one year behind, then.",
+                improved: "No. Let me be direct: building a leading-edge fab ecosystem takes years, not months. We need thousands of qualified engineers - the U.S. education system doesn't produce them at that scale. We need suppliers with semiconductor expertise located nearby - that requires business cases and investments. We need regulatory clarity on water usage, chemical handling, environmental permits - state and federal agencies are still learning. This is why we're saying ecosystem readiness determines the timeline. We're the experts here - we've built hundreds of fabs. Trust us when we say the bottleneck isn't TSMC's technology transfer speed; it's the U.S. infrastructure readiness to absorb it.",
+                insights: ["Expert Authority", "Detailed Justification", "Confidence"]
+            },
+            {
+                num: 6,
+                question: "How much of the $52-56 billion CAPEX is going to the US?",
+                original: "We don't just break down those numbers, but we do tell people that in the next three years, the total CAPEX is going to be significantly higher than the number in the past three years. So that is evidence of our strong conviction in the AI megatrend.",
+                improved: "We don't break down those numbers, but I'll give you context: over the next three years, total CAPEX will be significantly higher than the past three years - that's evidence of our strong conviction in the AI megatrend and our commitment to building a complete semiconductor ecosystem in the U.S., not just TSMC fabs. When we say ecosystem, we mean bringing our suppliers, establishing training programs with universities, working with state governments on infrastructure. That's a much bigger investment than just building facilities.",
+                insights: ["Ecosystem Investment", "Broader Impact", "Strategic Vision"]
+            },
+            {
+                num: 7,
+                question: "Are four additional fabs in the US realistic?",
+                original: "It depends on customers' demand. We are looking at very strong customer demand. We don't have the number.",
+                improved: "It depends on two things: customer demand, which is very strong, and ecosystem readiness. We can build fabs - that's what we do. But fabs without qualified engineers, without local suppliers, without proper regulatory frameworks, can't produce leading-edge chips efficiently. So yes, we're looking at significant expansion, but it's contingent on the U.S. addressing talent shortages and regulatory gaps. We're working with federal and state governments on these issues because they're the real limiting factors. Not yet on specific numbers, because that depends on variables outside TSMC's control - workforce development, supplier localization progress, regulatory clarity. When those foundations are stronger, we can commit to specific expansion numbers.",
+                insights: ["Conditional Commitment", "External Dependencies", "Government Partnership"]
+            },
+            {
+                num: 8,
+                question: "Potential collaboration with Intel on advanced packaging?",
+                original: "It depends if it makes sense to the customers and also if it makes sense to our wafer business. The advanced packaging business to us is strategic. It enables our wafer business. So if there are more alternatives in the market which can enable our business, we can consider that.",
+                improved: "Advanced packaging is strategic to our wafer business - it enables our customers' system solutions. If there are partners in the market who can expand packaging capacity and support more wafer business for TSMC and our customers, we're open to considering that. But let me be clear: we evaluate partnerships based on customer value and business synergy. The principle is simple - if it helps our customers and strengthens our position, we'll consider it.",
+                insights: ["Customer-Centric", "Strategic Clarity", "Flexible Approach"]
+            },
+            {
+                num: 9,
+                question: "Are you considering working with Intel?",
+                original: "It's not that we are considering. We can consider if there are more alternatives which will lead to more wafer business for TSMC.",
+                improved: "We evaluate all options that serve our customers and our business strategy. Right now, there's no specific discussion with Intel, but we don't rule out partnerships if they make strategic sense. The semiconductor industry benefits from collaboration where it creates value.",
+                insights: ["Open But Noncommittal", "Industry Perspective"]
+            },
+            {
+                num: 10,
+                question: "Would you invest in Intel like your customers have?",
+                original: "No discussion at all. What I'm trying to say is it can be considered.",
+                improved: "There's no discussion about investment in Intel. What I'm saying is we remain open to strategic collaborations across the industry where they benefit our customers and our technology roadmap. Our focus is on enabling our customers' success - if partnerships help achieve that, we'll explore them on their merits.",
+                insights: ["Clear Boundaries", "Customer Focus", "Strategic Flexibility"]
+            },
+            {
+                num: 11,
+                question: "Impact of Taiwan dollar strengthening to 30.9?",
+                original: "Foreign exchange rate between US dollar and TWD does affect our profitability. In the past, for every percentage change in foreign exchange rate, it will affect our margins, gross margins and operating margin by 40 basis points. Nowadays, when the margins are higher, the impact becomes less sensitive. So nowadays, it's about 30 basis points, either way.",
+                improved: "Foreign exchange between US dollar and Taiwan dollar does affect our profitability. Historically, every 1% change in exchange rate affected our margins by about 40 basis points. Now, with higher margins, that sensitivity has decreased to about 30 basis points. We manage this through multiple strategies - selling US dollars into NT dollars when market conditions allow, forward contracts, and moving US dollar positions to offshore entities with USD as functional currency. This is standard treasury management for a global company.",
+                insights: ["Risk Management", "Operational Sophistication"]
+            },
+            {
+                num: 12,
+                question: "How are you looking at hedging strategies?",
+                original: "The easiest way is to sell US dollar into NT. However, the market impact should be considered. If we're not able to sell all these, then we will do the forward contract. And if we still cannot accommodate all the positions, then we will continue to do moving the US dollar to the offshore entity, which has US dollar as its functional currency.",
+                improved: "Our approach is methodical: first, we sell US dollars into NT dollars where market impact is acceptable. If we can't accommodate all positions through spot transactions, we use forward contracts. And finally, we shift US dollar positions to offshore entities where USD is the functional currency. This layered approach manages both exchange rate risk and market impact. It's sophisticated treasury management, but necessary given our scale of operations across multiple currencies.",
+                insights: ["Structured Approach", "Professional Execution"]
+            }
+        ];
+
+        // Populate question navigation
+        const questionNav = document.getElementById('questionNav');
+        questions.forEach((q, index) => {
+            const btn = document.createElement('button');
+            btn.className = `question-btn ${index === 0 ? 'active' : ''}`;
+            btn.innerHTML = `
+                <div class="question-num">Q${q.num}</div>
+                <div>${q.question}</div>
+            `;
+            btn.onclick = () => showQuestion(index);
+            questionNav.appendChild(btn);
+        });
+
+        // Populate comparisons
+        const comparisons = document.getElementById('comparisons');
+        questions.forEach((q, index) => {
+            const section = document.createElement('div');
+            section.className = `comparison-section ${index === 0 ? 'active' : ''}`;
+            section.id = `question-${index}`;
+            
+            const insightTags = q.insights.map(insight => 
+                `<span class="insight-tag">${insight}</span>`
+            ).join('');
+            
+            section.innerHTML = `
+                <div class="question-header">
+                    <h3>Question ${q.num}</h3>
+                    <p>${q.question}</p>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="answer-card original">
+                        <div class="card-label">Original Answer</div>
+                        <div class="answer-text">${q.original}</div>
+                    </div>
+                    
+                    <div class="answer-card improved">
+                        <div class="card-label">Strategically Improved</div>
+                        <div class="answer-text">${q.improved}</div>
+                    </div>
+                </div>
+                
+                <div class="insights-section">
+                    <h4>💡 Key Strategic Improvements</h4>
+                    ${insightTags}
+                </div>
+            `;
+            comparisons.appendChild(section);
+        });
+
+        function showQuestion(index) {
+            // Update buttons
+            document.querySelectorAll('.question-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            
+            // Update sections
+            document.querySelectorAll('.comparison-section').forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
+            
+            // Scroll to top of comparison
+            document.getElementById('comparisons').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function shareLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Why TSMC\'s CFO Failed Taiwan - Strategic Communication Analysis');
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        }
+
+        function downloadPDF() {
+            alert('The PDF version is available for download. Please contact the author or check the original source.');
+        }
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
